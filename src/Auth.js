@@ -8,7 +8,6 @@ class Auth extends React.Component {
         this.isAuthenticated = false;
 
         this.state = {
-
         }
 
         this.Authenticate = (obj, cb) => {
@@ -16,7 +15,6 @@ class Auth extends React.Component {
                 cb();
              } else {
                 axios.post('http://127.0.0.1:8080/Auth', obj).then(response => {
-                    
                     if (response.status === 200) {
                         this.isAuthenticated = true;
                         cb();
@@ -24,9 +22,7 @@ class Auth extends React.Component {
                 }, error => {
                     this.isAuthenticated = true;
                     cb();
-                }).catch(err => {
-
-                })
+                }).catch(err => {})
             }
         }
     }
@@ -35,5 +31,3 @@ class Auth extends React.Component {
 
 
 export default new Auth();
-
-// this.history.push('/home');
