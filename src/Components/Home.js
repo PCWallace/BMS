@@ -15,7 +15,8 @@ class Home extends React.Component{
     }
     
     render(){
-        console.log('hi');
+        console.log(this.props);
+        console.log(this.state);
         return(
             <div>
                 <CityList />

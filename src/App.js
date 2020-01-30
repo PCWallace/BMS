@@ -4,19 +4,18 @@ import Login from './Components/Login';
 import Home from './Components/Home';
 import Header from './Components/Shared/Header';
 import Footer from './Components/Shared/Footer';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, useHistory, BrowserRouterProps} from 'react-router-dom';
 
 function App() {
-  return (
-    <Router>
 
+  return (
+    <Router >
       <div>
         <Header />
         <Switch>
           <Route exact path="/login">
-            <Login/>
+            <Login />
           </Route>
-
           <Login path="/home">
             <Home/>
           </Login>
