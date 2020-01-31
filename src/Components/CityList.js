@@ -1,40 +1,58 @@
 import CityListService from "../Services/CityListService";
-import React, { useState, useEffect } from "react";
-import { Row, Container, Col, Card, Table } from "react-bootstrap";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import React from "react";
+import { Row, Container, Col } from "react-bootstrap";
+import MovieTheaterService from "../Services/MovieTheaterService";
 
 
-function CityList(props) {
+class CityList extends React.Component {
+  constructor(props) {
+    super(props);
 
-    const [cityList, updateCityList] = useState([]);
-    const [cListView, updateCListView] = useState([]);
+    this.state = {
+      cityList: [],
+      cListView: [],
+      clickedCity : '', 
+      tmbcList : []
+    };
 
-    
-   
-useEffect(()=>{    CityListService.GetCityList((list)=>{
-        updateCityList(list);
-        updateCListView(cList(cityList));
-    });
-},[cityList]);
-
-    const cList = (ctyList)=>{
-        return ctyList.map((city) => {
-            console.log(city);
+    this.clickHandler = event=>{
+        this.setState({clickedCity : event.currentTarget.dataset.value});
+        MovieTheaterService.GetTMBCList(event.currentTarget.dataset.value, (List)=>{
+            this.setState({tmbcList : List});
             
-            return (<Col>
-                <div className="pill pill-info">{ city.cityName }</div>
-            </Col>)
         })
     }
 
-    
-
-    return (<Container>
-        <Row>
-            {cListView}
-        </Row>
-    </Container>);
+    this.cList = ctyList => {
+        let i = 4;
+      return ctyList.map(city => {
+        return (
+            <Col className="text-center" key={i++}>
+                <div className="badge badge-pill shadow badge-info my-4 px-5 py-2" 
+                style={{'cursor':'pointer'}} 
+                onClick={this.clickHandler}
+                data-value={city.cityId}>
+                    <span className="h6">{city.cityName}</span>
+                </div>
+            </Col>
+        );
+      });
+    };
   }
-  
-  export default CityList;
-  
+  componentDidMount() {
+    CityListService.GetCityList(list => {
+      this.setState({ cityList: list });
+      this.setState({ cListView: this.cList(list) });
+    });
+  }
+
+  render() {
+    return (
+      <Container className="border mt-2"  key={2}>
+        <Row  key={3}>{this.state.cListView}</Row>
+      </Container>
+    );
+  }
+}
+
+export default CityList;

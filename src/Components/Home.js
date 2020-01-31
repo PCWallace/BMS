@@ -6,7 +6,6 @@ import CityList from './CityList';
 class Home extends React.Component{
 
     constructor(props) {
-        console.log('hi');
         super(props)
     
         this.state = {
@@ -15,8 +14,6 @@ class Home extends React.Component{
     }
     
     render(){
-        console.log(this.props);
-        console.log(this.state);
         return(
             <div>
                 <CityList />
